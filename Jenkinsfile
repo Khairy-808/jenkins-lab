@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Cloning repository...'
+                echo 'Cloning source code from GitHub...'
                 checkout scm
             }
         }
@@ -12,10 +12,10 @@ pipeline {
         stage('Verify Tools') {
             steps {
                 sh '''
-                    echo "Checking PHP..."
+                    echo "Checking PHP version..."
                     php -v
 
-                    echo "Checking PHPUnit..."
+                    echo "Checking PHPUnit version..."
                     phpunit --version
                 '''
             }
@@ -33,11 +33,11 @@ pipeline {
 
     post {
         success {
-            echo '✅ Build succeeded. All tests passed.'
+            echo '✅ Build succeeded. All unit tests passed.'
         }
 
         failure {
-            echo '❌ Build failed. Check the unit tests.'
+            echo '❌ Build failed. One or more tests failed.'
         }
 
         always {
